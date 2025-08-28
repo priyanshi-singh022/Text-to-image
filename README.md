@@ -1,21 +1,50 @@
-# 🖼️ Text-to-Image Generator (Python + MonsterAPI)
+# Text-to-Image Generator (Python)
 
-A Python-based application that takes text prompts from the user and generates images using the [MonsterAPI](https://monsterapi.ai/) — an AI platform for fast and efficient model inference.
-
-This project is part of an exploration into AI-based image generation using simple Python tools and powerful cloud inference.
+Generate images from text prompts using Hugging Face's Stable Diffusion API.
 
 ---
 
-## 🚀 Features
+## Features
 
-- ✍️ Accepts user input text prompts
-- ⚡ Uses MonsterAPI to generate images based on prompts
-- 🖼️ Saves and displays generated images locally
+- Generate high-quality images from descriptive text prompts
+- Saves generated images locally as `result.png`
+- Easy to set up using a `.env` file for your API key
+- Beginner-friendly and ready to run
 
 ---
 
-## 📸 Example
+## Demo
+[prompt](Images/ss.png)
+[result](Images/result.png)
+
+---
+
+## Technologies Used
+
+- Python 3.7+
+- `requests` for HTTP requests
+- `python-dotenv` for environment variable management
+- Hugging Face Stable Diffusion API
+
+---
+
+## Installation
+
+1. **Clone the repository**
 
 ```bash
-Enter your prompt: A cat riding a skateboard in space
-Image saved as: cat_skateboard_space.png
+git clone https://github.com/your-username/text-to-image.git
+cd text-to-image
+```
+2. **Install dependencies:**
+  pip install requests python-dotenv
+
+3. **Create a .env file in the project root and add your Hugging Face API key:**
+HF_API_KEY=your_api_key_here
+---
+
+## How It Works
+- The script loads your API key from .env
+- You enter a descriptive text prompt
+- The script sends your prompt to Hugging Face's Stable Diffusion API
+- The API generates an image and saves it as result.png
