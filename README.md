@@ -14,8 +14,8 @@ Generate images from text prompts using Hugging Face's Stable Diffusion API.
 ---
 
 ## Demo
-[prompt](Images/ss.png)
-[result](Images/result.png)
+![prompt](Images/ss.png)
+![result](Images/result.png)
 
 ---
 
