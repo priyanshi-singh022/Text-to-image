@@ -37,10 +37,13 @@ git clone https://github.com/your-username/text-to-image.git
 cd text-to-image
 ```
 2. **Install dependencies:**
-  pip install requests python-dotenv
-
+```bash
+pip install requests python-dotenv
+```
 3. **Create a .env file in the project root and add your Hugging Face API key:**
+```bash
 HF_API_KEY=your_api_key_here
+```
 ---
 
 ## How It Works
