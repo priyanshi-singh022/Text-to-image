@@ -1,42 +1,32 @@
-from monsterapi import client
+from dotenv import load_dotenv
+import os
 import requests
-import webbrowser
+# Load API key from .env
+load_dotenv()
+hf_token = os.getenv("HF_API_KEY")
 
-api_key ="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6IjhjZWNhOGEwOWYzZmIyZmNlMWM1ZTNjODBiZjkyMzJlIiwiY3JlYXRlZF9hdCI6IjIwMjUtMDctMDhUMDY6MjI6MTguNTA0NjIzIn0.TfYdtxlKu11wUMqJCwM-V5u7_4KY7fByLck-A6UGe-U"
+if not hf_token:
+    raise ValueError("⚠️ HF_API_KEY not found. Please set it in .env file")
 
-monster_client = client(api_key)   # Initialize client
+# Hugging Face Stable Diffusion API
+API_URL = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0"
+headers = {"Authorization": f"Bearer {hf_token}"}
 
+# Prompt from user
 prompt = input("Prompt: ")
 
-model = "txt2img"
+# Send request
+response = requests.post(API_URL, headers=headers, json={"inputs": prompt})
 
-input_data = {
-    'prompt': prompt,
-    'negprompt': 'bad anatomy',
-    'samples': 1,
-    'steps': 50,
-    'aspect_ratio': 'square',
-    'guidance_scale': 7.5,  # <-- fixed typo here
-    'seed': 2414,
-}
-
-result = monster_client.generate(model, input_data)
-
-img_url = result['output'][0]
-
-file_name = "generated.jpg"
-
-#download the image
-response = requests.get(img_url)
-
+# Handle response
 if response.status_code == 200:
-    with open(file_name, 'wb') as file:
-        file.write(response.content)
-    print("Image downloaded")
-
-    #opent the file
-    webbrowser.open(file_name)
+    # Check if HuggingFace returned an image or JSON
+    if response.headers.get("content-type") == "application/json":
+        print("⚠️ Response:", response.json())  # e.g. model still loading
+    else:
+        output_file = "result.png"
+        with open(output_file, "wb") as f:
+            f.write(response.content)
+        print(f"✅ Image saved as {output_file}")
 else:
-    print("Failed to download")
-
-
+    print(f"❌ Error {response.status_code}: {response.text}")
